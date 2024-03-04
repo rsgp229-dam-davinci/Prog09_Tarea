@@ -17,24 +17,25 @@ import vista.Menus;
  */
 public class Program {
     private Banco banco;
-    public void iniciar(Banco banco){
+
+    public void iniciar(Banco banco) {
         this.banco = banco;
         menuPrincipal();
     }
 
     /**
      * Método que presenta el menú principal y realiza las llamadas al resto de las funciones.
-     *
+     * <p>
      * El código es bastante sencillo, tanto en esta como en los demás métodos, por lo que se omiten los
      * comentarios en el resto de métodos.
      */
-    private void menuPrincipal(){
+    private void menuPrincipal() {
         int option = -1;
-        while (option != 0){
+        while (option != 0) {
             Menus.showOptionsWithTitle(new String[]{"Salir", "Abrir nueva cuenta",
                     "Ver cuentas disponibles", "Obtener datos de una cuenta", "Ingresar en cuenta",
-                    "Retirar de una cuenta", "Consultar saldo"},"Menú Principal");
-            option = InputHelper.getInteger("Introduzca una opción", 6);
+                    "Retirar de una cuenta", "Consultar saldo", "Eliminar una cuenta"}, "Menú Principal");
+            option = InputHelper.getInteger("Introduzca una opción", 7);
             switch (option) {
                 case 0:
                     System.exit(0);
@@ -57,8 +58,22 @@ public class Program {
                 case 6:
                     consultarSaldo();
                     break;
+                case 7: //Nueva opción introducida para el ejercicio 8
+                    eliminarCuenta();
+                    break;
             }
         }
+    }
+
+    /**
+     * Código nuevo introducido para el ejercicio 8
+     */
+    private void eliminarCuenta() {
+        Iban iban = askIban();
+        if (banco.eliminarCuenta(iban))
+            System.out.println("La cuenta se eliminó correctamente.");
+        else
+            System.out.println("No ha podido eliminarse la cuenta. La cuenta no existe o el saldo se superior a cero.");
     }
 
     private void consultarSaldo() {
@@ -103,7 +118,7 @@ public class Program {
 
     private void mostrarDetalleCuenta() {
         Iban iban = askIban();
-        if (banco.existeCuenta(iban)){
+        if (banco.existeCuenta(iban)) {
             String infoCuenta = banco.informacionCuenta(iban);
             System.out.println(infoCuenta);
         } else
@@ -118,10 +133,10 @@ public class Program {
         }
     }
 
-    private void abrirCuentaNueva(){
+    private void abrirCuentaNueva() {
         int selection = -1;
-        while (selection != 0){
-            Menus.showOptionsWithTitle(new String[]{"Salir","Cuenta de Ahorro","Cuenta Corriente Particular",
+        while (selection != 0) {
+            Menus.showOptionsWithTitle(new String[]{"Salir", "Cuenta de Ahorro", "Cuenta Corriente Particular",
                     "Cuenta Corriente de Empresa"}, "Abrir cuenta");
             selection = InputHelper.getInteger("Indique el tipo de cuenta", 3);
             switch (selection) {
@@ -140,10 +155,10 @@ public class Program {
         }
     }
 
-    private void abrirCuentaAhorro(){
+    private void abrirCuentaAhorro() {
         Particular titular = createParticular();
         Iban iban = askIban();
-        CuentaAhorro nuevaCuenta = new CuentaAhorro(iban,titular);
+        CuentaAhorro nuevaCuenta = new CuentaAhorro(iban, titular);
         boolean cuentaAbierta = banco.abrirCuenta(nuevaCuenta);
         if (cuentaAbierta) {
             System.out.println("Cuenta de Ahorro abierta correctamente");
@@ -152,10 +167,10 @@ public class Program {
         }
     }
 
-    private void abrirCuentaParticular(){
+    private void abrirCuentaParticular() {
         Particular titular = createParticular();
         Iban iban = askIban();
-        CCPersonal nuevaCuenta = new CCPersonal(iban,titular);
+        CCPersonal nuevaCuenta = new CCPersonal(iban, titular);
         boolean cuentaAbierta = banco.abrirCuenta(nuevaCuenta);
         if (cuentaAbierta) {
             System.out.println("Cuenta Particular abierta correctamente");
@@ -164,10 +179,10 @@ public class Program {
         }
     }
 
-    private void abrirCuentaEmpresa(){
+    private void abrirCuentaEmpresa() {
         Empresa titular = createEmpresa();
         Iban iban = askIban();
-        CCEmpresa nuevaCuenta = new CCEmpresa(iban,titular);
+        CCEmpresa nuevaCuenta = new CCEmpresa(iban, titular);
         boolean cuentaAbierta = banco.abrirCuenta(nuevaCuenta);
         if (cuentaAbierta) {
             System.out.println("Cuenta Corriente de Empresa abierta correctamente");
@@ -176,13 +191,13 @@ public class Program {
         }
     }
 
-    private Particular createParticular(){
+    private Particular createParticular() {
         Particular particular = null;
-        while (particular == null){
-            try{
+        while (particular == null) {
+            try {
                 String dni = InputHelper.getString("Introduzca el DNI del cliente");
                 particular = new Particular(dni);
-            } catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 System.out.printf("El DNI introducido no es válido");
             }
         }
@@ -193,13 +208,13 @@ public class Program {
         return particular;
     }
 
-    private Empresa createEmpresa(){
+    private Empresa createEmpresa() {
         Empresa empresa = null;
-        while (empresa == null){
-            try{
+        while (empresa == null) {
+            try {
                 String cif = InputHelper.getString("Introduzca el CIF de la empresa");
                 empresa = new Empresa(cif);
-            } catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 System.out.printf("El CIF introducido no es válido");
             }
         }
@@ -208,9 +223,9 @@ public class Program {
         return empresa;
     }
 
-    private Iban askIban(){
+    private Iban askIban() {
         Iban iban = null;
-        while (iban == null){
+        while (iban == null) {
             String ibanNumber = InputHelper.getString("Introduzca el número de IBAN");
             try {
                 iban = new Iban(ibanNumber);

@@ -69,10 +69,17 @@ public abstract class CuentaBancaria implements Imprimible {
         return sb.toString();
     }
 
+    /*
+    * Notas del ejercicio 8
+    * Se ha cambiado el método para tener en cuenta las subclases.
+    * De esta manera se puede usar correctamente el método contains de la
+    * colección que se utiliza como estructura de datos para contener
+    * las cuentas bancarias.
+    * */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || !(o instanceof CuentaBancaria)) return false;
         CuentaBancaria that = (CuentaBancaria) o;
         return Objects.equals(iban, that.iban);
     }
