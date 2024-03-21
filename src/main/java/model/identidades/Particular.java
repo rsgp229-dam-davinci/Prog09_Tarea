@@ -1,5 +1,7 @@
 package model.identidades;
 
+import java.io.Serializable;
+
 /**
  * Clase específica que representa un cliente particular. La comparación entre clientes se realiza mediante
  * el documento que le representa por ser un dato unívoco. La comparación se realiza gracias al método equals
@@ -9,7 +11,7 @@ package model.identidades;
  *
  * @author Rafael SGP
  */
-public class Particular extends Cliente{
+public class Particular extends Cliente implements Serializable {
 
     public Particular(String dni) throws IllegalArgumentException{
         super.setDocumento(dni);

@@ -2,13 +2,15 @@ package model.cuentas;
 
 import model.identidades.Particular;
 
+import java.io.Serializable;
+
 /**
  * Clase que representa una cuenta de ahorro. Extiende la clase CuentaBancaria y añade los campos y métodos
  * necesarios para representar los parámetros solicitados en el ejercicio.
  *
  * @author Rafael SGP
  */
-public class CuentaAhorro extends CuentaBancaria{
+public class CuentaAhorro extends CuentaBancaria implements Serializable {
     private double interesRemuneracion;
 
     /**

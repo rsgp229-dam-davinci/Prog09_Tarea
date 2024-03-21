@@ -1,5 +1,6 @@
 package model.cuentas;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,7 +16,7 @@ import java.util.regex.Pattern;
  * Al igual que en casi todas las clases del modelo, se han sobreescrito los métodos equals y hashCode para que la
  * comparación corresponda realmente con el dato relevante de la clase; en este caso el string que representa el IBAN.
  */
-public class Iban {
+public class Iban implements Serializable {
     private final static String IBAN_REGEX ="^(ES)[0-9]{22}$";
     private final static Pattern IBAN_pattern = Pattern.compile(IBAN_REGEX);
     private String iban;

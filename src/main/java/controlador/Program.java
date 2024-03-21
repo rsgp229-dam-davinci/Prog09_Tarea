@@ -38,6 +38,7 @@ public class Program {
             option = InputHelper.getInteger("Introduzca una opción", 7);
             switch (option) {
                 case 0:
+                    banco.saveAccounts();
                     System.exit(0);
                     break;
                 case 1:

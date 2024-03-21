@@ -1,6 +1,8 @@
 package model.identidades;
 
 import model.Imprimible;
+
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -10,7 +12,7 @@ import java.util.Objects;
  * Como en casi todas las clases del modelo, sobreescribe equals y hashCode. En este caso, la comparación se realiza
  * mediante el documento de identidad.
  */
-public abstract class Cliente implements Imprimible {
+public abstract class Cliente implements Imprimible, Serializable {
     private String nombre;
     private String documento;
 

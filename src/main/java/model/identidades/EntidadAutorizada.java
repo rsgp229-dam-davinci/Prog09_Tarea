@@ -1,5 +1,6 @@
 package model.identidades;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Objects;
  *
  * La clase es inmutable. Como se pide en el ejercicio que se ejecute en entornos Java11 no se utiliza Record.
  */
-public class EntidadAutorizada {
+public class EntidadAutorizada implements Serializable {
     private String nombreEntidad;
     public EntidadAutorizada(String nombreEntidad) throws IllegalArgumentException {
         if (nombreEntidad == null || nombreEntidad.isEmpty())

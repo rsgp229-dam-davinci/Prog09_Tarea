@@ -1,11 +1,13 @@
 package model.identidades;
 
+import java.io.Serializable;
+
 /**
  * Clase que representa una empresa.
  *
  * @author RafaelSGP
  */
-public class Empresa extends Cliente{
+public class Empresa extends Cliente implements Serializable {
     public Empresa(String cif) throws IllegalArgumentException{
         super.setDocumento(cif);
     }

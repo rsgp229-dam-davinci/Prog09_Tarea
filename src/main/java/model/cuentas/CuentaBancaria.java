@@ -3,6 +3,7 @@ package model.cuentas;
 import model.Imprimible;
 import model.identidades.Cliente;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -21,7 +22,7 @@ import java.util.Objects;
  *  cada clase, los parámetros más representativos o unívocos para ambos métodos.
  *
  */
-public abstract class CuentaBancaria implements Imprimible {
+public abstract class CuentaBancaria implements Imprimible, Serializable {
 
     private Cliente titular;
     protected double saldo;
