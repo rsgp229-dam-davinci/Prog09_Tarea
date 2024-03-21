@@ -9,6 +9,13 @@ import model.identidades.Empresa;
 import model.identidades.Particular;
 import vista.Menus;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Arrays;
+
 /**
  * Esta clase hace de controlador de de las operaciones que se solicitan en el ejercicio. Implementa exclusivamente
  * lo solicitado.
@@ -17,6 +24,7 @@ import vista.Menus;
  */
 public class Program {
     private Banco banco;
+    private final String CUSTOMER_LIST_FILENAME = "ListadoClientesCCC.txt";
 
     public void iniciar(Banco banco) {
         this.banco = banco;
@@ -34,8 +42,8 @@ public class Program {
         while (option != 0) {
             Menus.showOptionsWithTitle(new String[]{"Salir", "Abrir nueva cuenta",
                     "Ver cuentas disponibles", "Obtener datos de una cuenta", "Ingresar en cuenta",
-                    "Retirar de una cuenta", "Consultar saldo", "Eliminar una cuenta"}, "Menú Principal");
-            option = InputHelper.getInteger("Introduzca una opción", 7);
+                    "Retirar de una cuenta", "Consultar saldo", "Eliminar una cuenta", "Listado clientes (a archivo)"}, "Menú Principal");
+            option = InputHelper.getInteger("Introduzca una opción", 8);
             switch (option) {
                 case 0:
                     banco.saveAccounts();
@@ -62,8 +70,33 @@ public class Program {
                 case 7: //Nueva opción introducida para el ejercicio 8
                     eliminarCuenta();
                     break;
+                case 8: //Nueva opción introducida para el ejercicio 9
+                    listadoClientes();
+                    break;
             }
         }
+    }
+
+    /**
+     * Nuevo código añadido para el ejercicio 9.2
+     *
+     * Recibe el array de Strings que devuelve el método añadido a la clase banco, también para el mismo ejercicio.
+     * Crear un BufferedWriter y añade las líneas del array.
+     */
+    private void listadoClientes() {
+        String[] listado = banco.getCustomerList();
+        File customerListFile = new File(CUSTOMER_LIST_FILENAME);
+        try (FileWriter fileWriter = new FileWriter(customerListFile, Charset.forName("UTF-8"));
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+            for (String s : listado) {
+                bufferedWriter.write(s);
+                bufferedWriter.newLine();
+            }
+            System.out.println("Se ha creado con éxito el listado de clientes en la ruta:\n" + customerListFile.getAbsolutePath());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     /**

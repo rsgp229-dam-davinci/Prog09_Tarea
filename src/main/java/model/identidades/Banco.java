@@ -106,6 +106,13 @@ public class Banco {
             return false;
     }
 
+    /**
+     * Código añadido para el ejercicio 9.1
+     *
+     * Este método guarda las cuentas bancarias en el archivo indicado por la constante PERSISTENCY...
+     *
+     * Crea el FileStream y el ObjectOutputStream y sobreescribe el archivo que ya hubiera.
+     */
     public void saveAccounts(){
         File persistencyFile = new File(PERSISTENCY_FILE_NAME);
         try (FileOutputStream fileOS = new FileOutputStream(persistencyFile);
@@ -118,6 +125,15 @@ public class Banco {
         }
     }
 
+    /**
+     * Código añadido para el ejercicio 9.1
+     *
+     * Este método carga las cuentas que se hubieran guardado en sesiones anteriores. Se llama desde el constructor
+     * de la clase.
+     *
+     * En caso de no existir o error, devuelve una colección nueva.g
+     * @return
+     */
     private HashMap<Iban, CuentaBancaria> loadAccounts(){
         File persistencyFile = new File((PERSISTENCY_FILE_NAME));
         if (persistencyFile.exists()){
@@ -135,6 +151,23 @@ public class Banco {
             }
         }
         return new HashMap<Iban, CuentaBancaria>(100);
+    }
+
+    /**
+     * Código añadido para el ejercicio 9.2
+     *
+     * Este método devuelve un array con el nombre de la cuenta y el número de IBAN.
+     *
+     * @return
+     */
+    public String[] getCustomerList(){
+        String [] list = new String[cuentasEntidad.size()];
+        int pointer = 0;
+        for (CuentaBancaria c : cuentasEntidad.values()){
+            list[pointer] = c.getTitular().getNombre() + " " + c.getIban().getIbanNumber();
+            pointer++;
+        }
+        return list;
     }
 
 }
